@@ -38,10 +38,11 @@ namespace ConsoleApp1
 
             //babisUppgift4();
 
-            babisUppgift5();
+            //babisUppgift5();
 
             //kassa();
 
+            lager();
         }
 
         static void repeatYN(Action func)
@@ -714,7 +715,7 @@ namespace ConsoleApp1
             städer[1] = "Jönköping";
             Console.Write("Skrv in en svensk stad: ");
             städer[2] = Console.ReadLine();
-            for(int i = 0; i < städer.Length; i++)
+            for (int i = 0; i < städer.Length; i++)
             {
                 Console.WriteLine(städer[i]);
             }
@@ -724,13 +725,13 @@ namespace ConsoleApp1
             Console.Write("Hur många sporter har de testat: ");
             int antalSporter = int.Parse(Console.ReadLine());
             string[] sporter = new string[antalSporter];
-            for(int i = 0; i < sporter.Length; i++)
+            for (int i = 0; i < sporter.Length; i++)
             {
-                Console.Write("Skriv in sport " + ( i+ 1) + " : ");
+                Console.Write("Skriv in sport " + (i + 1) + " : ");
                 sporter[i] = Console.ReadLine();
             }
             Console.Write("Du har testat följande sporter: ");
-            for (int i = 0; i < sporter.Length; i++) 
+            for (int i = 0; i < sporter.Length; i++)
             {
                 Console.Write(sporter[1] + ", ");
             }
@@ -738,12 +739,12 @@ namespace ConsoleApp1
 
         static void somTal()
         {
-            int[] tal = {2,3,4,5,1,3,64535,342,1,12,23,4,43,433434};
+            int[] tal = { 2, 3, 4, 5, 1, 3, 64535, 342, 1, 12, 23, 4, 43, 433434 };
             int minstaTal = tal[0];
             int störstaTal = tal[0];
-            for(int i = 0; i < tal.Length; i++)
+            for (int i = 0; i < tal.Length; i++)
             {
-                if(tal[i] < minstaTal)
+                if (tal[i] < minstaTal)
                 {
                     minstaTal = tal[i];
                 }
@@ -903,10 +904,157 @@ namespace ConsoleApp1
             {
                 Console.WriteLine(e.Message);
                 return;
-            } catch(Exception e)
+            }
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 return;
+            }
+        }
+
+        static void lager()
+        {
+            try
+            {
+                bool isRunning = true;
+                int storlek = 10;
+                string[] namn = new string[storlek];
+                int[] pris = new int[storlek];
+                int[] antal = new int[storlek];
+
+                int index = 0;
+
+                while (isRunning)
+                {
+                    Console.Write("Vad vill du göra (C/R/U/D/E): ");
+                    string action = Console.ReadLine().ToLower();
+
+                    void read()
+                    {
+                        string mellanslag(string tal)
+                        {
+                            string värde = "";
+                            {
+                                for (int i = 0; i < (12 - tal.Length); i++)
+                                {
+
+                                    värde = värde + " ";
+                                }
+                                värde = värde + tal;
+                                return värde;
+                            }
+                        }
+                        Console.WriteLine("   |        Namn|        Pris|       Antal");
+
+                        for (int i = 0; i < index; i++)
+                        {
+                            Console.WriteLine($" {i + 1} |{mellanslag(namn[i])}|{mellanslag($"{pris[i]}")}|{mellanslag($"{antal[i]}")}");
+                        }
+                    }
+
+                    void create()
+                    {
+                        Console.Write("Vad ska varan heta: ");
+                        namn[index] = Console.ReadLine();
+                        Console.Write("Vad ska varan kosta: ");
+                        pris[index] = int.Parse(Console.ReadLine());
+                        Console.Write("Hur många vill du att det ska vara: ");
+                        antal[index] = int.Parse(Console.ReadLine());
+                        index++;
+                    }
+
+                    void update()
+                    {
+                        read();
+                        Console.WriteLine();
+                        Console.Write("Vilken product vill du ändra: ");
+                        int plats = int.Parse(Console.ReadLine());
+                        if (plats - 1 > index || plats == 0)
+                        {
+                            return;
+                        }
+                        Console.Write("Vilket fält vill du ändra (N/P/A): ");
+                        string fält = Console.ReadLine().ToLower();
+
+                        void ändraNamn()
+                        {
+                            Console.Write("Vad vill du ändra namnet till: ");
+                            namn[plats - 1] = Console.ReadLine();
+                        }
+
+                        void ändraPris()
+                        {
+                            Console.Write("Vad vill du ändra priset till: ");
+
+                            pris[plats - 1] = int.Parse(Console.ReadLine());
+                        }
+
+                        void ändraAntal()
+                        {
+                            Console.Write("Vad vill du ändra antalet till: ");
+
+                            antal[plats - 1] = int.Parse(Console.ReadLine());
+                        }
+
+                        switch (fält)
+                        {
+                            case "n": ändraNamn(); break;
+                            case "p": ändraPris(); break;
+                            case "a": ändraAntal(); break;
+                            default: break;
+
+                        }
+                    }
+
+                    void delete()
+                    {
+                        read();
+                        Console.WriteLine();
+                        Console.Write("Vilken product vill du ta bort: ");
+                        int plats = int.Parse(Console.ReadLine());
+
+                        if (plats - 1 > index || plats == 0)
+                        {
+                            return;
+                        }
+
+                        for (int i = 0; i < index; i++)
+                        {
+                            if (plats - 1 <= i)
+                            {
+                                namn[i] = namn[i + 1];
+                                pris[i] = pris[i + 1];
+                                antal[i] = antal[i + 1];
+                            }
+                        }
+                        index--;
+                    }
+
+                    void exit()
+                    {
+                        isRunning = false;
+                    }
+
+                    Console.WriteLine();
+                    switch (action)
+                    {
+                        case "c": create(); break;
+                        case "r": read(); break;
+                        case "u": update(); break;
+                        case "d": delete(); break;
+                        case "e": exit(); break;
+                        default: break;
+                    }
+                    Console.WriteLine();
+                }
+            }
+            catch (FormatException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
             }
         }
     }
