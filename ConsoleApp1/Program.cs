@@ -40,6 +40,8 @@ namespace ConsoleApp1
 
             //babisUppgift5();
 
+            //babisUppgift6();
+
             //kassa();
 
             lager();
@@ -914,17 +916,17 @@ namespace ConsoleApp1
 
         static void lager()
         {
-            try
+            bool isRunning = true;
+            int storlek = 10;
+            string[] namn = new string[storlek];
+            int[] pris = new int[storlek];
+            int[] antal = new int[storlek];
+
+            int index = 0;
+
+            while (isRunning)
             {
-                bool isRunning = true;
-                int storlek = 10;
-                string[] namn = new string[storlek];
-                int[] pris = new int[storlek];
-                int[] antal = new int[storlek];
-
-                int index = 0;
-
-                while (isRunning)
+                try
                 {
                     Console.Write("Vad vill du göra (C/R/U/D/E): ");
                     string action = Console.ReadLine().ToLower();
@@ -1047,14 +1049,101 @@ namespace ConsoleApp1
                     }
                     Console.WriteLine();
                 }
+
+
+                catch (FormatException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
-            catch (FormatException e)
+        }
+
+        static void babisUppgift6()
+        {
+            exceptionLoop();
+            arrayBaklänges();
+
+        }
+
+        static void exceptionLoop()
+        {
+            int start = 0;
+            int stop = 0;
+            int steg = 0;
+            while (true)
             {
-                Console.WriteLine(e.Message);
+                try
+                {
+                    Console.Write("Mata in start: ");
+                    start = int.Parse(Console.ReadLine());
+                    Console.Write("Mata in stop: ");
+                    stop = int.Parse(Console.ReadLine());
+                    Console.Write("Mata in steg: ");
+                    steg = int.Parse(Console.ReadLine());
+                    for (int i = start; i <= stop; i += steg)
+                    {
+                        Console.Write(i + " ");
+                    }
+                    Console.WriteLine();
+                    break;
+                }
+                catch (FormatException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                catch (OverflowException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
-            catch (Exception e)
+
+
+
+        }
+        static void arrayBaklänges()
+        {
+            int längd = 0;
+            int[] lista;
+            while (true)
             {
-                Console.WriteLine(e.Message);
+                try
+                {
+                    Console.Write("Hur lång ska din array vara: ");
+                    längd = int.Parse(Console.ReadLine());
+                    lista = new int[längd];
+                    for(int i = 0; i < lista.Length; i++)
+                    {
+                        Console.Write($"Skriv in tal {i + 1}: ");
+                        lista[lista.Length - i - 1] = int.Parse(Console.ReadLine());
+                    }
+
+                    foreach(int tal in lista)
+                    {
+                        Console.Write(" " + tal + " ");
+                    }
+                    Console.WriteLine();
+                    break;
+                }
+                catch (FormatException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                catch (OverflowException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
         }
     }
