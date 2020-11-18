@@ -1191,7 +1191,7 @@ namespace ConsoleApp1
                     Array.Sort(löner);
                     if(löner.Length % 2 == 0)
                     {
-                        median = löner[(löner.Length / 2) - 2] + löner[(löner.Length / 2) - 1] / 2;
+                        median = (löner[(löner.Length / 2) - 1] + löner[(löner.Length / 2)]) / 2;
                     } else
                     {
                         median = löner[(löner.Length / 2)];
