@@ -42,9 +42,11 @@ namespace ConsoleApp1
 
             //babisUppgift6();
 
+            babisUppgift7();
+
             //kassa();
 
-            lager();
+            //lager();
         }
 
         static void repeatYN(Action func)
@@ -706,7 +708,7 @@ namespace ConsoleApp1
             //städer();
             //sporter();
             //somTal();
-            somTal2();
+            //somTal2();
             //somTal3();
         }
 
@@ -834,8 +836,6 @@ namespace ConsoleApp1
                 double totalsumma = double.Parse(Console.ReadLine());
                 Console.Write("Ange erhållet belopp: ");
                 int erhålletBelopp = int.Parse(Console.ReadLine());
-
-
                 if (erhålletBelopp < 0 || erhålletBelopp < totalsumma)
                 {
                     Console.WriteLine("Du är fattig bre");
@@ -1131,6 +1131,94 @@ namespace ConsoleApp1
                     }
                     Console.WriteLine();
                     break;
+                }
+                catch (FormatException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                catch (OverflowException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
+        }
+
+        static void babisUppgift7()
+        {
+            lönerevision();
+        }
+
+        static string mellanslag(string tal)
+        {
+            string värde = "";
+            for (int i = 0; i < (10 - tal.Length); i++)
+            {
+                värde = värde + " ";
+            }
+            värde = värde + tal;
+            return värde;
+        }
+
+        static void lönerevision()
+        {
+            int längd;
+            int summa = 0;
+            int medelvärde;
+            int median;
+            int lönespridning;
+            int[] löner;
+            int[] gamlaLöner;
+            while (true)
+            {
+                try
+                {
+                    Console.Write("Ange antal löner att mata in: ");
+                    längd = int.Parse(Console.ReadLine());
+                    löner = new int[längd];
+                    for(int i = 0; i < löner.Length; i++)
+                    {
+                        Console.Write($"Ange lön nummer {i + 1}: ");
+                        int input = int.Parse(Console.ReadLine());
+                        summa += input;
+                        löner[i] = input;
+                    }
+                    medelvärde = Convert.ToInt32(löner.Average());
+                    gamlaLöner = löner;
+                    Array.Sort(löner);
+                    if(löner.Length % 2 == 0)
+                    {
+                        median = löner[(löner.Length / 2) - 2] + löner[(löner.Length / 2) - 1] / 2;
+                    } else
+                    {
+                        median = löner[(löner.Length / 2)];
+                    }
+                    lönespridning = löner.Max() - löner.Min();
+                    Console.WriteLine("---------------------------------------------");
+                    Console.WriteLine("Medianlön:        " + mellanslag($"{median}") + " KR");
+                    Console.WriteLine("Medellön:         " + mellanslag($"{medelvärde}") + " KR");
+                    Console.WriteLine("Lönespridninglön: " + mellanslag($"{lönespridning}") + " KR");
+                    Console.WriteLine("---------------------------------------------");
+                    for (int i = 0; i < gamlaLöner.Length; i++)
+                    {
+                        if(i % 3 == 2)
+                        {
+                            Console.WriteLine("    " + gamlaLöner[i]);
+                        } else
+                        {
+                            Console.Write("    " + gamlaLöner[i]);
+                        }
+                    }
+                    Console.WriteLine();
+                    Console.Write("Klicka esc för att avbryta och vad som helst för att förtsätta: ");
+                    Console.WriteLine();
+                    if (Console.ReadKey(true).Key == ConsoleKey.Escape)
+                    {
+                        break;
+                    }
                 }
                 catch (FormatException e)
                 {
