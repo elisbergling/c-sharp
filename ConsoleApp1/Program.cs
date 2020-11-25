@@ -42,11 +42,13 @@ namespace ConsoleApp1
 
             //babisUppgift6();
 
-            babisUppgift7();
+            //babisUppgift7();
 
             //kassa();
 
             //lager();
+
+            talArray();
         }
 
         static void repeatYN(Action func)
@@ -1152,10 +1154,10 @@ namespace ConsoleApp1
             lönerevision();
         }
 
-        static string mellanslag(string tal)
+        static string mellanslag(string tal, int len)
         {
             string värde = "";
-            for (int i = 0; i < (10 - tal.Length); i++)
+            for (int i = 0; i < (len - tal.Length); i++)
             {
                 värde = värde + " ";
             }
@@ -1198,9 +1200,9 @@ namespace ConsoleApp1
                     }
                     lönespridning = löner.Max() - löner.Min();
                     Console.WriteLine("---------------------------------------------");
-                    Console.WriteLine("Medianlön:        " + mellanslag($"{median}") + " KR");
-                    Console.WriteLine("Medellön:         " + mellanslag($"{medelvärde}") + " KR");
-                    Console.WriteLine("Lönespridninglön: " + mellanslag($"{lönespridning}") + " KR");
+                    Console.WriteLine("Medianlön:        " + mellanslag($"{median}", 10) + " KR");
+                    Console.WriteLine("Medellön:         " + mellanslag($"{medelvärde}", 10) + " KR");
+                    Console.WriteLine("Lönespridninglön: " + mellanslag($"{lönespridning}", 10) + " KR");
                     Console.WriteLine("---------------------------------------------");
                     for (int i = 0; i < gamlaLöner.Length; i++)
                     {
@@ -1233,6 +1235,49 @@ namespace ConsoleApp1
                     Console.WriteLine(e.Message);
                 }
             }
+        }
+
+        static void talArray()
+        {
+            Console.Write("Hur många tal vill du mata in: ");
+            int längd = int.Parse(Console.ReadLine());
+            int[] tal = new int[längd];
+            for (int i = 0; i < längd; i++)
+            {
+                Console.Write($"Tal {i + 1}: ");
+                tal[i] = int.Parse(Console.ReadLine());
+            }
+
+
+            int konstigLängd = 0;
+
+            foreach (int t in tal)
+            {
+                if (t <= 100 && t >= 1)
+                {
+                    Console.Write(t + " ");
+                }
+                else
+                {
+                    konstigLängd++;
+                }
+            }
+            Console.WriteLine();
+            int konstigIndex = 0;
+            int[] konstigaNummer = new int[konstigLängd];
+            foreach (int t in tal)
+            {
+                if (t > 100 || t < 1)
+                {
+                    konstigaNummer[konstigIndex] = t;
+                    konstigIndex++;
+                }
+            }
+            foreach (int k in konstigaNummer)
+            {
+                Console.Write(k + " ");
+            }
+            Console.WriteLine();
         }
     }
 }
